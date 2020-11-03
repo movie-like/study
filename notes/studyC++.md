@@ -165,6 +165,7 @@ deque  双端队列
 #### dynamic_cast  
 
 
+
 #### const_cast  
 
 顾名思义，该命令会转换掉表达式的const性质
@@ -226,22 +227,40 @@ WM_NCACREATE是一个Windows系统消息，在窗口创建之前系统会发出�
 CREATESTRUCT结构定义了传递给应用程序的窗口过程的初始化参数，它定义了窗口外观相关特性，CREATESTRUCT结构具有如下形式：  
 ``` C++
 typedef struct tagCREATESTRUCT {
-    LPVOID lpCreateParams;
-    HANDLE hInstance;
-    HMENU hMenu;
-    HWND hwndParent;
-    int cy;
-    int cx;
-    int y;
-    int x;
-    LONG style;
-    LPCSTR lpszName;
-    LPCSTR lpszClass;
-    DWORD dwExStyle;
+    DWORD DdwExStyle, //窗口的扩展风格
+    LPCTSTR lpClassName, //指向注册类名的指针
+    LPCTSTR lpWindowName, //指向窗口名称的指针
+    DWORD dwStyle, //窗口风格
+    int x, //窗口的水平位置
+    int y, //窗口的垂直位置
+    int nWidth, //窗口的宽度
+    int nHeight, //窗口的高度
+    HWND hWndParent, //父窗口的句柄
+    HMENU hMenu, //菜单的句柄或是子窗口的标识符
+    HINSTANCE hInstance, //应用程序实例的句柄
+    LPVOID lpParam //指向窗口的创建数据
 } CREATESTRUCT;
 ```
 其中， `LPVOID lpCreateParams` 是一个创建窗口过程中可以用来储存自定义参数的变量  
 在这里我们用它来储存我们定义的窗口类对象的指针  
+```C++
+HWND CreateWindowEx(
+DWORD DdwExStyle, //窗口的扩展风格
+LPCTSTR lpClassName, //指向注册类名的指针
+LPCTSTR lpWindowName, //指向窗口名称的指针
+DWORD dwStyle, //窗口风格
+int x, //窗口的水平位置
+int y, //窗口的垂直位置
+int nWidth, //窗口的宽度
+int nHeight, //窗口的高度
+HWND hWndParent, //父窗口的句柄
+HMENU hMenu, //菜单的句柄或是子窗口的标识符
+HINSTANCE hInstance, //应用程序实例的句柄
+LPVOID lpParam //指向窗口的创建数据
+);
+```
+当我们创建一个窗口时，把指向对象的指针this传入最后一个参数lpParam即可  
+这样，CreateWindowEx返回的窗口句柄指向的窗口结构中就会存下lpParam这个数据  
 
 ### 旧式强制类型转换
 
