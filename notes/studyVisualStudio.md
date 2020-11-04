@@ -27,7 +27,7 @@ typedef char TCHAR;
 ```
 其中：  
 `##` 是ANSI C标准的预处理语法，它叫做“粘贴符号”，表示将前面的L添加到宏参数上  
-也就是说，如果我们写 `_T(“Hello”)` ，展开后即为 `L“Hello”`    
+也就是说，如果我们写 `_T("Hello")` ，展开后即为 `L"Hello"`    
 `_UNICODE` 宏用于C运行期头文件，而 `UNICODE` 宏则用于Windows头文件  
 `UNICODE` 和 `_UNICODE` 的区别：  
 前者没有下划线，专门用于Windows头文件；后者有一个前缀下划线，专门用于C运行时头文件  
@@ -44,7 +44,7 @@ typedef char TCHAR;
 #else
 #define SetWindowText  SetWindowTextA
 #endif // !UNICODE
-```
+```  
 当编译源代码模块时，通常必须同时定义这两个宏  
 Windows定义的Unicode数据类型有哪些：  
 WCHAR Unicode字符  
