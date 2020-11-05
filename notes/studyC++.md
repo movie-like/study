@@ -13,6 +13,56 @@ C++标准规定了每个算术类型的最小储存空间，但是它并不阻�
 
 ## 类类型
 
+### 静态成员变量
+
+类体中的数据成员的声明前加上static关键字，该数据成员就成为了该类的静态数据成员  
+和其他数据成员一样，静态数据成员也遵守 `public` / `protected` / `private` 访问规则  
+同时，静态数据成员还具有以下特点：   
+静态数据成员实际上是类域中的全局变量，所以，静态数据成员的初始化不应该被放在类的定义中 ，而应该单独拿出来初始化   
+例如我定义了一个ZWindow类，里面嵌套定义了一个ZWindowBase类    
+```C++
+class ZWindow
+{
+private:
+	class ZWindowBase
+	{
+	public:
+		static LPCWSTR getName() noexcept;
+		static HINSTANCE getInstance() noexcept;
+	private:
+		ZWindowBase() noexcept;
+		~ZWindowBase();
+		ZWindowBase(const ZWindowBase&) = delete;
+		ZWindowBase& operator=(const ZWindowBase&) = delete;
+		static const LPCWSTR wndClassName;
+		static ZWindowBase zWindowBase;
+		HINSTANCE hInstance;
+	};
+public:
+	ZWindow() noexcept;
+	~ZWindow();
+	ZWindow(int, int,LPCWSTR) noexcept;
+	ZWindow(const ZWindow&) = delete;
+private:
+	static LRESULT CALLBACK handleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK handleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	LRESULT handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
+private:
+	int width = 0;
+	int height = 0;
+	HWND hWnd;
+};
+```
+然后我在类的定义外部这样初始化这两个静态变量  
+```C++
+const LPCWSTR ZWindow::ZWindowBase::wndClassName = L"ZEngine";
+ZWindow::ZWindowBase ZWindow::ZWindowBase::zWindowBase;
+```
+ 
+### 静态成员函数
+
+
+
 ### C++11新标准
 ```C++
 class A
@@ -35,6 +85,11 @@ private:
      int a;
 };
 ```
+此外
+C++11允许使用 `=delete` 将拷贝构造函数和拷贝赋值运算符定义为删除的函数  
+在函数参数列表后加上 `=delete` 即表明这个函数是删除的函数   
+
+与此类似的，我们可以使用 `=defalue` 告诉编译器生成默认的构造函数
 
 ## 指针
 

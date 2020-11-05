@@ -1,0 +1,2 @@
+D:\kaede\documents\study\programing\codes\C++\ZEngine\Debug\ZEngine.exe
+D:\kaede\documents\study\programing\codes\C++\ZEngine\Debug\ZEngine.pdb
