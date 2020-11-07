@@ -24,12 +24,24 @@
     <ClCompile Include="MainProcess.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ZApplication.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ZException.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ZGraphics.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZApplication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZException.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

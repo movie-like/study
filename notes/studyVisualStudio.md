@@ -54,6 +54,9 @@ PCWSTR 指向一个恒定的Unicode字符串的指针
 ANSI/Unicode通用数据类型为TCHAR，PTSTR,LPCTSTR  
   
 在VS的项目属性中设置Unicode本质其实就是帮你定义好了 `UNICODE` 和 `_UNICODE` 这两个宏  
+当我们使用Unicode编程时，如果要用到宽字符串，则在字符串前加L  
+如 `L"Hello"`  
+
 <br />
 <br />
 

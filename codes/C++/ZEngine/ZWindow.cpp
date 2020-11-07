@@ -1,5 +1,5 @@
 #include"ZWindow.h"
-
+#include"ZException.h"
 ZWindow::ZWindowBase ZWindow::ZWindowBase::zWindowBase;
 const LPCWSTR ZWindow::ZWindowBase::wndClassName = L"ZEngine";
 
@@ -32,7 +32,7 @@ ZWindow::ZWindowBase::~ZWindowBase()
 {
 	UnregisterClass(wndClassName, getInstance());
 }
-ZWindow::ZWindow(int width, int height, LPCWSTR name) noexcept
+ZWindow::ZWindow(int width, int height, LPCWSTR name) :width(width),height(height)
 {
 	RECT wr{};
 	wr.left = 100;
@@ -52,7 +52,16 @@ ZWindow::ZWindow(int width, int height, LPCWSTR name) noexcept
 		nullptr,
 		ZWindowBase::getInstance(),
 		this);
+	if (hWnd == nullptr)
+	{
+		throw ZException(GetLastError(),nullptr);
+	}
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	pZGraphics = std::make_unique<ZGraphics>(hWnd);//在动态内存中分配一个ZGraphics对象并用hWnd参数初始化它
+}
+const HWND ZWindow::getHWnd()
+{
+	return hWnd;
 }
 ZWindow::~ZWindow()
 {
@@ -85,3 +94,9 @@ LRESULT ZWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) no
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+ZGraphics& ZWindow::getZGraphics()
+{
+	return *pZGraphics;
+}
+
+

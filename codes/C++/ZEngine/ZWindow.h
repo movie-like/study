@@ -3,6 +3,7 @@
 #include<Windows.h>
 #include"ZGraphics.h"
 #include<memory>
+#include<string>
 
 class ZWindow
 {
@@ -22,17 +23,18 @@ private:
 		HINSTANCE hInstance;
 	};
 public:
-	ZWindow() noexcept;
 	~ZWindow();
-	ZWindow(int, int,LPCWSTR) noexcept;
+	ZWindow(int width, int height,LPCWSTR wndName);
 	ZWindow(const ZWindow&) = delete;
+	ZGraphics& getZGraphics();
+	const HWND getHWnd();
 private:
 	static LRESULT CALLBACK handleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK handleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LRESULT handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 private:
-	int width = 0;
-	int height = 0;
+	int width;
+	int height;
 	HWND hWnd;
-	std::unique_ptr<ZGraphics*>pGraphics;
+	std::unique_ptr<ZGraphics>pZGraphics;
 };
